@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<div style='display: grid;
+            text-align: center;
+            background-color: antiquewhite'>
+    <form action="/add" class="add" method="post">
+        <div class="info">
+            <input type="text" name="name" placeholder="TaskName">
+            <input type="text" name="detail" placeholder="Detail">
+            <input type="date" name="deadline">
+            <button type="submit">Add task</button>
+        </div>
+    </form>
+    <form action="/search" class="search" method="get">
+        <div>
+            <input type="text" name="tag" id="tag" placeholder="Enter keyword or id">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+    <br><br>
+    <table>
+        <thead>
+        <tr>
+            <th class=task-id">#</th>
+            <th class="task">Task</th>
+            <th class="detail">Deatil</th>
+            <th class="deadline">Deadline<a href = './sort/deadline'><button class="sort_button"><img src="static/images.png"></button></a></th>
+            <th class="status">Status <a href = './sort/status'><button class="sort_button"><img src="static/images.png"></button></a></th>
+            <th class="update">Update</th>
+            <th class="delete">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for todo in todo_list%}
+        <tr>
+           <td class=id">{{todo.task_id}}</td>
+            <td class="name">{{todo.name}}</td>
+            <td class="detail">{{todo.detail}}</td>
+            <td class="deadline">{{todo.deadline}}</td>
+            {%if todo.done==False%}
+            <td class="status">Not Done</td>
+            {%else%}
+            <td class="status">Done</td>
+            {%endif%}
+            <td ><a href="/update/{{todo.task_id}}">Update</a></td>
+            <td ><a href="/delete/{{todo.task_id}}">Delete</a></td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
